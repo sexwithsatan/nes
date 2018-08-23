@@ -1,0 +1,25 @@
+.o {          /* Section */
+  margin: 1ex 1rem; }
+.os {         /* Subsection */
+  margin: 1ex 0; }
+
+.h {          /* Heading */
+  margin: 1ex 0 0 0;
+  font-weight: bold; }
+.i {          /* List item */
+  padding: 0.5ex 0; }
+
+h1 {
+  font-size: 24pt; }
+h2 {
+  font-size: 14pt; }
+h3 {
+  font-size: 12pt; }
+
+p {
+  margin: 0.5ex 0;
+  padding: 0.5ex 0; }
+small {
+  font-size: inherit; }
+.tt {         /* Monospace text */
+  padding: 0.5ex 1rem; }

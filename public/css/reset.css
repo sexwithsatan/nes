@@ -1,0 +1,13 @@
+fieldset, legend,
+figure, figcaption,
+dl, ol, ul {
+  padding: 0; }
+
+body, form {
+  margin: 0; }
+
+fieldset, legend {
+  border: 0; }
+
+dl, ol, ul {
+  list-style: none; }
