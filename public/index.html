@@ -1,41 +1,35 @@
 <!doctype html>
 <meta charset="utf-8">
-<link rel="icon" href="favicon.png">
 <link rel="stylesheet" href="css/style.css">
-<script src="bundle.js" defer></script>
+<script src="js/bundle.js" async></script>
 
 <title>h5kit</title>
-<header class="o">
- <h1 class="h" id="title">h5kit</h1>
- <p><i class="alt">ES6+HTML5+CSS3 seed project</i>
-</header>
-
-<nav>
- <ul class="o" id="menu">
-  <li class="i"><a href="#o1">ul.o li.i</a>
-  <li class="i"><a href="#o2">ul.o li.i</a>
- </ul>
-</nav>
-
 <main id="content">
- <section class="o" id="o1">
-  <h2 class="h">section.o</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin odio urna, eleifend id tincidunt tincidunt, viverra accumsan velit. Aenean a dapibus ligula. Nulla rutrum consequat risus, sed tincidunt ante facilisis a. Donec non pretium velit. Suspendisse potenti.
-  <p><output class="tt" id="time-now">output.tt</output>
-  <p>In fermentum augue velit, sit amet viverra magna semper id. Duis congue dapibus auctor. Phasellus feugiat orci eget est volutpat ultricies. Quisque scelerisque maximus est, sed porta enim tempor eget. Sed id mollis quam, eu pellentesque nunc.
-
-  <section class="os">
-   <h3 class="h">section.os</h3>
-   <p>Mauris interdum, risus aliquam vehicula condimentum, ex lorem ornare magna, sit amet imperdiet nibh lacus vitae massa. Ut scelerisque sem eleifend enim bibendum volutpat. Sed porta lorem lectus, sed elementum urna aliquet sed. Integer semper sit amet sem sit amet laoreet.
-  </section>
- </section>
-
- <section class="o" id="o2">
-  <h2 class="h">section.o</h2>
-  <p>Suspendisse nisl vestibulum phasellus parturient elit neque orci consectetur diam sodales ullamcorper elit malesuada vulputate sed a quam rutrum velit blandit potenti. Neque a tortor suspendisse parturient dictumst leo habitant sapien natoque congue tortor vestibulum vestibulum sagittis habitasse netus cum a amet cras convallis interdum condimentum ultricies ad a curabitur purus.
- </section>
+ <canvas id="canvas" width="256" height="256">
+  <!-- TODO: Fallback content -->
+ </canvas>
 </main>
 
-<footer class="o">
- <p><small class="fine" id="copyright">© 2018 sex with satan &lt;<a href="mailto:sexwithsatan@users.sf.net">sexwithsatan@users.sf.net</a>&gt;</small>
-</footer>
+<form>
+ <fieldset id="options">
+  <legend>Rendering</legend>
+  <label class="field">
+   <span class="label">Frame rate:</span>
+   <select name="fps" required>
+    <option value="20.0329">20</option>
+    <option value="30.0494">30</option>
+    <option value="40.0658">40</option>
+    <option value="50.0823">50</option>
+    <option value="60.0988" selected>60</option>
+   </select>
+   <abbr class="legend" title="frames per second">fps</abbr>
+  </label>
+ </fieldset>
+
+ <label class="field">
+  <span class="label">ROM image:</span>
+  <input name="rom" type="file" accept="application/octet-stream">
+ </label>
+ 
+ <button>Start</button>
+</form>

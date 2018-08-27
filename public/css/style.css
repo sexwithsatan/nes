@@ -1,34 +1,19 @@
-@import url('./reset.css');
-@import url('./layout.css');
+abbr {
+  text-decoration: none; }
 
-:root {
-        --black: #111;
-         --gray: dimgray;
-          --red: #e24;
-         --blue: #03f;
-     --alt-blue: #639;
-        --white: ghostwhite;
-    --alt-white: #eee; }
+.field,
+.label,
+.input,
+button {
+  display: block; }
 
-body {
-  font: 10pt/1.2 'Helvetica', sans-serif;
-  color: var(--black);
-  background: var(--white); }
-
-.tt {
-  font: 12pt/1.2 'Courier New', monospace;
-  color: var(--black);
-  background: var(--alt-white); }
-
-.alt,
-.fine {
-  color: var(--gray); }
-
-a:link {
-  color: var(--blue); }
-a:visited {
-  color: var(--alt-blue); }
-a:focus {
-  outline: 1px dotted var(--gray); }
-a:active {
-  color: var(--red); }
+canvas,
+#content {
+  width: 256px;
+  height: 256px; }
+#content {
+  background: black; }
+canvas {
+  background: transparent; }
+canvas[data-paused] {
+  opacity: 0.5; }

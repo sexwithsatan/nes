@@ -1,7 +1,48 @@
-import update from './update.js';
+import animate from './animate.js'
+import states from './states.js'
+import frames from './frames.js'
+import serializeForm from '@esnes/serialize-form'
 
-// even though Rollup is bundling all your files together, errors and
-// logs will still point to your original source modules
-console.log('if you have sourcemaps enabled in your devtools, click on main.js:5 -->');
+function getSubmittedForm(d) {
+  return new Promise(function (resolve) {
+    d.addEventListener('submit', function (e) {
+      e.preventDefault()
+      resolve(e.target)
+    })
+  })
+}
 
-update();
+function enqueueFrames({width: w, height: h}) {
+  const pixels = new ImageData(w, h)
+  const queue = () => frames(pixels)
+
+  return queue
+}
+
+void async function main({document: d}) {
+  const form = await getSubmittedForm(d)
+  const {fps} = serializeForm(form.elements.options)
+  const canvas = d.getElementById('canvas')
+  const context = canvas.getContext('2d', {alpha: false})
+  const queue = enqueueFrames(canvas)
+  const fsm = states(function () {
+    return animate(fps, queue, function (frame) {
+
+      // Blit each frame onto the <canvas>
+      context.putImageData(frame, 0, 0)
+    })
+  })
+
+  // Transition the FSM to the 'active' state
+  fsm.next()
+
+  canvas.addEventListener('click', function ({target}) {
+    const {value} = fsm.next()
+
+    if (value) {
+      target.removeAttribute('data-paused')
+    } else {
+      target.setAttribute('data-paused', '')
+    }
+  })
+} (window)
