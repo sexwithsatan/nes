@@ -1,21 +1,22 @@
 <!doctype html>
 <meta charset="utf-8">
+<link rel="icon" href="favicon.png">
 <link rel="stylesheet" href="css/style.css">
-<script src="js/bundle.js" async></script>
+<script type="module" src="js/app.js" async></script>
 
-<title>h5kit</title>
+<title>ESNES v1.0-alpha</title>
 <main id="content">
  <canvas id="canvas" width="256" height="256">
   <!-- TODO: Fallback content -->
  </canvas>
 </main>
 
-<form>
- <fieldset id="options">
+<form method="post" enctype="multipart/form-data">
+ <fieldset name="options">
   <legend>Rendering</legend>
   <label class="field">
    <span class="label">Frame rate:</span>
-   <select name="fps" required>
+   <select name="fps">
     <option value="20.0329">20</option>
     <option value="30.0494">30</option>
     <option value="40.0658">40</option>
@@ -28,7 +29,7 @@
 
  <label class="field">
   <span class="label">ROM image:</span>
-  <input name="rom" type="file" accept="application/octet-stream">
+  <input name="rom" type="file" accept="application/octet-stream" required>
  </label>
  
  <button>Start</button>
