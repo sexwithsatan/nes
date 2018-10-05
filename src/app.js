@@ -1,48 +1,53 @@
+/* globals window */
 import animate from '@esnes/animated-canvas'
+import serialize from './serialize.js'
 import captureEvent from './capture-event.js'
-import serializeForm from './serialize-form.js'
-import {PLAY, PAUSE} from './states.js'
+import {PLAY, PAUSE} from './pause.js'
 import bindAttribute from './bind-attribute.js'
 
 function* frames(ww) {
   while (true) {
 
-    // Ask the worker to start rendering the next frame
-    ww.postMessage(yield)
+    // Ask the worker to start drawing the next frame
+    ww.postMessage({ms: yield})
   }
 }
 
-(async function ({document: d}) {
+void async function ({document: d}) {
   const ww = new Worker('js/worker.js')
-  const {target} = await captureEvent('submit', d)
-  const {fps} = serializeForm(target.elements['options'])
+  const {target: form} = await captureEvent('submit', d)
+  const {fps} = serialize(form['options'].elements)
   const canvas = d.getElementById('canvas')
   const context = canvas.getContext('bitmaprenderer')
-  const setPaused = bindAttribute('data-paused', [PLAY, PAUSE])
-  const g = animate(function* (start, stop) {
+  const setPaused = bindAttribute(canvas, 'data-paused', [PLAY, PAUSE])
+  const fsm = animate(function* (start, stop) {
 
     // Enter the animation loop:
     while (true) {
-      const handle = start(fps, () => frames(ww))
+      const animation = start(fps, () => frames(ww))
       yield PLAY
 
-      stop(handle)
+      stop(animation)
       yield PAUSE
     }
   })
 
-  // Put the {paused} flag in its initial state
-  g.next()
+  // Set the FSM to its initial state
+  fsm.next()
+
+  // Tell the worker to get ready to begin rendering
+  ww.postMessage(serialize(canvas.attributes))
 
   canvas.addEventListener('click', function () {
+    const {value: paused} = fsm.next()
 
-    // Bind {paused} to an attribute on <canvas>
-    setPaused(canvas, g.next().value)
+    // Bind the FSM to [data-paused] on <canvas>
+    setPaused(paused)
   })
 
-  ww.addEventListener('message', function ({data}) {
+  ww.addEventListener('message', function ({data: bitmap}) {
 
     // The worker has finished rendering a frame, display it
-    requestAnimationFrame(() => context.transferFromImageBitmap(data))
+    requestAnimationFrame(() => context.transferFromImageBitmap(bitmap))
   })
-}) (window)
+} (window)

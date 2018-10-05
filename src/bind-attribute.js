@@ -1,6 +1,6 @@
 export default
-function bindAttribute(attr, [off, on]) {
-  return (el, value) => {
+function bindAttribute(el, attr, [off, on]) {
+  return value => {
     switch (value) {
     default:
       throw new RangeError()
