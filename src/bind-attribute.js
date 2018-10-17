@@ -1,13 +1,24 @@
+/* globals RangeError */
+
 export default
-function bindAttribute(el, attr, [off, on]) {
-  return value => {
-    switch (value) {
-    default:
-      throw new RangeError()
-    case on:
-      return el.setAttribute(attr, '')
-    case off:
-      return el.removeAttribute(attr)
+function bindAttribute(el, name, [off, on]) {
+  return {
+    get() {
+      return el.getAttribute(name)
+    },
+
+    set(value) {
+      switch (value) {
+        
+      case on:
+        return el.setAttribute(name, '')
+
+      case off:
+        return el.removeAttribute(name)
+
+      default:
+        throw new RangeError(/* TODO */)
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 export default
-function serialize(pairs) {
-  return [...pairs].reduce((a, {name, value}) => ({
-    ...a,
+function serialize(pairs, initialValue = {}) {
+  return [...pairs].reduce((m, {name, value}) => ({
+    ...m,
     [name]: value
-  }), {})
+  }), initialValue)
 }
