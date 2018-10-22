@@ -4,17 +4,20 @@ export default
 function bindAttribute(el, name, [off, on]) {
   return {
     get() {
-      return el.getAttribute(name)
+      return el.hasAttribute(name)
+        ? on
+        : off
     },
 
     set(value) {
       switch (value) {
-        
       case on:
-        return el.setAttribute(name, '')
+        el.setAttribute(name, '')
+        return
 
       case off:
-        return el.removeAttribute(name)
+        el.removeAttribute(name)
+        return
 
       default:
         throw new RangeError(/* TODO */)

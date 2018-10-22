@@ -7,9 +7,12 @@ const production = !process.env.ROLLUP_WATCH
 
 export default {
   experimentalCodeSplitting: true,
-  input: ['src/app.js', 'src/worker.js'],
+  input: {
+    app: './src/app/main.js',
+    worker: './src/worker/main.js'
+  },
   output: {
-    dir: 'public/js',
+    dir: './public/js',
     format: 'es',
     sourcemap: true
   },
