@@ -17,16 +17,18 @@ function* frames(ww) {
 async function main({document: d}) {
   const ww = new Worker('js/worker.js')
   const {target: form} = await captureEvent('submit', d)
-  const rom = await uploadAsArrayBuffer(form['rom'].files[0])
-  const {fps} = serialize(form['options'].elements)
+  const rom = await uploadAsArrayBuffer(form.rom.files[0])
+  const {fps} = serialize(form.options.elements)
   const canvas = d.getElementById('canvas')
   const context = canvas.getContext('bitmaprenderer')
   const paused = bindAttribute(canvas, 'data-paused', [PLAY, PAUSE])
   const fsm = animate(function* (start, stop) {
 
     // The animation loop is driven by a 2-state FSM:
-    //  * Rendering is suspended on the PLAY -> PAUSE transition
-    //  * Rendering resumes on the PAUSE -> PLAY transition
+    //  (1) Rendering begins with the PAUSE -> PLAY transition
+    //  (2) Rendering is suspended by the PLAY -> PAUSE transition
+    //  (1) Rendering resumes on the next PAUSE -> PLAY transition
+    // ...and so forth.
     while (true) {
       const animation = start(fps, () => frames(ww))
       yield PLAY

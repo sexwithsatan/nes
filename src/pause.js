@@ -1,3 +1,5 @@
+/* globals Array */
+
 export const [
   PLAY,
   PAUSE
