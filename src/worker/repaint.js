@@ -13,7 +13,7 @@ function* pixels(palette) {
 }
 
 export default
-async function repaint(ww, {
+async function repaint(scope, {
   ms,
   palette,
   width: w,
@@ -22,7 +22,7 @@ async function repaint(ww, {
   const g = pixels(palette)
   const array = Uint8ClampedArray.from(g)
   const imageData = new ImageData(array, w, h)
-  const bitmap = await ww.createImageBitmap(imageData)
+  const bitmap = await scope.createImageBitmap(imageData)
 
-  ww.postMessage(bitmap, [bitmap])
+  scope.postMessage({bitmap}, [bitmap])
 }
