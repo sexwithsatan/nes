@@ -5,7 +5,7 @@ import serialize from './serialize.js'
 import {PLAY, PAUSE} from './pause.js'
 import bindAttribute from './bind-attribute.js'
 
-function main({window, document}) {
+(function ({window, document}) {
   const ww = new Worker('js/worker.js', {type: 'module'})
 
   document.addEventListener('submit', function (e) {
@@ -22,7 +22,7 @@ function main({window, document}) {
     const paused = bindAttribute(canvas, 'data-paused', [PLAY, PAUSE])
     const fsm = animate(function* (start, stop) {
 
-      // The animation loop is driven by a 2-state FSM:
+      // The rendering loop is driven by a 2-state FSM:
       //  (1) Rendering begins on the PAUSE -> PLAY transition
       //  (2) Rendering is suspended on the PLAY -> PAUSE transition
       //  (1) Rendering resumes on the next PAUSE -> PLAY transition
@@ -40,8 +40,8 @@ function main({window, document}) {
     // Put the FSM in its initial state
     fsm.next()
 
-    // Send the ROM file and the <canvas> dimensions to the worker
-    ww.postMessage({task: 'submit', rom, ...dimensions})
+    // Send the ROM file and <canvas> dimensions to the worker
+    ww.postMessage(Object.freeze({task: 'submit', rom, ...dimensions}))
 
     canvas.addEventListener('click', function () {
       const {value} = fsm.next()
@@ -56,6 +56,4 @@ function main({window, document}) {
       window.requestAnimationFrame(() => context.transferFromImageBitmap(bitmap))
     })
   })
-}
-
-main(self)
+}) (self)

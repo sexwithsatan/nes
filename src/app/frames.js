@@ -1,8 +1,11 @@
+/* globals Object */
+const {freeze: $} = Object
+
 export default
 function* frames(ww) {
   while (true) {
 
-    // Keep the worker synchronized with the animation loop
-    ww.postMessage({task: 'repaint', ms: yield})
+    // Keep the worker synchronized with the rendering loop
+    ww.postMessage($({task: 'repaint', ms: yield}))
   }
 }

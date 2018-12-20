@@ -1,4 +1,4 @@
-/* globals ImageData, Uint8ClampedArray */
+/* globals Object, Uint8ClampedArray, ImageData */
 import render from '@esnes/2c02'
 
 function* pixels(palette) {
@@ -24,5 +24,5 @@ async function repaint(scope, {
   const imageData = new ImageData(array, w, h)
   const bitmap = await scope.createImageBitmap(imageData)
 
-  scope.postMessage({bitmap}, [bitmap])
+  scope.postMessage(Object.freeze({bitmap}), [bitmap])
 }
