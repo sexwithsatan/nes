@@ -5,9 +5,9 @@ import emulate from './emulate.js'
   const fragment = scope.location.hash.replace('#', ':')
 
   scope.addEventListener('nes:load', function () {
-    const url = 'worker.js' // TODO: scope.location.match()
-    const program = new Worker(`${url}#program`, {type: 'module'})
-    const graphics = new Worker(`${url}#graphics`, {type: 'module'})
+    const js = 'worker.js' // TODO: scope.location.match()
+    const program = new Worker(`${js}#program`, {type: 'module'})
+    const graphics = new Worker(`${js}#graphics`, {type: 'module'})
 
     scope.addEventListener('message', function ({data}) {
       program.postMessage(data)

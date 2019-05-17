@@ -1,13 +1,22 @@
 /* globals Object, Uint8ClampedArray, ImageData */
 import render from '@esnes/2c02'
 
-function* pixels(palette) {
-  for (const n of render()) {
-    const i = 3*(n & 0x3f)
+const cgram = Array.from({length: 0x20}, (_, i) => i)
+const registers = {
+//  '2C02': {
+    H: 1, HT: 5, FH: 3,
+    V: 1, VT: 5, FV: 3,
+    S: 1
+//  }
+}
 
-    yield palette[i + 0]
-    yield palette[i + 1]
-    yield palette[i + 2]
+function* pixels(palette, {registers, cgram, oam}, [read]) {
+  for (const color of render(registers, [read])) {
+    const hue = cgram[color & 0x1f]
+
+    yield palette[3*hue + 0]
+    yield palette[3*hue + 1]
+    yield palette[3*hue + 2]
     yield 0xff
   }
 }
@@ -17,9 +26,11 @@ async function repaint(scope, {
   ms,
   palette,
   width: w,
-  height: h
+  height: h,
+  graphics
 }) {
-  const g = pixels(palette)
+  const read = address => graphics.read(address)
+  const g = pixels(palette, {registers, cgram}, [read])
   const array = Uint8ClampedArray.from(g)
   const imageData = new ImageData(array, w, h)
   const bitmap = await scope.createImageBitmap(imageData)

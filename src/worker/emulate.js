@@ -15,6 +15,6 @@ async function emulate(scope, {rom, width, height}) {
   ])
 
   scope.addEventListener('nes:repaint:graphics', function ({detail}) {
-    repaint(scope, {graphics, palette, width, height, ...detail})
+    repaint(scope, {palette, width, height, graphics, ...detail})
   })
 }
