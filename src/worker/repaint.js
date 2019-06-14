@@ -1,4 +1,4 @@
-/* globals Object, Uint8ClampedArray, ImageData */
+/* global Object, Uint8ClampedArray, ImageData */
 import render from '@esnes/2c02'
 
 const cgram = Array.from({length: 0x20}, (_, i) => i)

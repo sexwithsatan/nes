@@ -5,7 +5,7 @@ import fetchJson from './fetch-json.js'
 import allocate from '@esnes/nes-nrom'
 
 export default
-async function emulate(scope, {rom, width, height}) {
+async function loadMapper(scope, {rom, width, height}) {
   const [
     {program, graphics},
     palette

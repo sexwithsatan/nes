@@ -1,5 +1,5 @@
-/* globals self, Worker, CustomEvent */
-import emulate from './emulate.js'
+/* global self, Worker, CustomEvent */
+import loadMapper from './load-mapper.js'
 
 (function (scope) {
   const fragment = scope.location.hash.replace('#', ':')
@@ -20,7 +20,7 @@ import emulate from './emulate.js'
   })
 
   scope.addEventListener('nes:submit:graphics', function ({detail}) {
-    emulate(scope, detail)
+    loadMapper(scope, detail)
   })
 
   scope.dispatchEvent(new CustomEvent(`nes:load${fragment}`))

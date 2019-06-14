@@ -1,4 +1,4 @@
-/* globals Array, Symbol */
+/* global Array, Symbol */
 
 export const [
   PLAY,

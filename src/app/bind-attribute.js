@@ -1,4 +1,4 @@
-/* globals RangeError */
+/* global RangeError */
 
 export default
 function bindAttribute(el, name, [off, on]) {

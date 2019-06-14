@@ -1,4 +1,4 @@
-/* globals Error */
+/* global Error */
 
 export default
 function fetchJson(scope, url) {
