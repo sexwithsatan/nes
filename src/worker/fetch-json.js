@@ -1,12 +1,12 @@
 /* global Error */
 
 export default
-function fetchJson(scope, url) {
-  return scope.fetch(url).then(function (response) {
-    if (!response.ok) {
-      throw new Error(response.statusText)
-    }
+async function fetchJson(scope, url) {
+  const response = await scope.fetch(url)
 
-    return response.json()
-  })
+  if (!response.ok) {
+    throw new Error(response.statusText)
+  }
+
+  return response.json()
 }

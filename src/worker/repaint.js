@@ -2,16 +2,32 @@
 import render from '@esnes/2c02'
 
 const cgram = Array.from({length: 0x20}, (_, i) => i)
-const registers = {
+const counters = {
 //  '2C02': {
-    H: 1, HT: 5, FH: 3,
-    V: 1, VT: 5, FV: 3,
+    H: 1, HT: 5,
+    V: 1, VT: 5, FV: 3
+}
+const registers = {
+    FH: 3,
     S: 1
 //  }
 }
 
-function* pixels(palette, {registers, cgram, oam}, [read]) {
-  for (const color of render(registers, [read])) {
+function run(cpu, ppu) {
+
+  while (true) {
+
+    ppu.next()
+    ppu.next()
+    ppu.next()
+
+    cpu.next()
+  }
+
+}
+
+function* pixels(palette, {cgram, ...state}, [read]) {
+  for (const color of render(state, [read])) {
     const hue = cgram[color & 0x1f]
 
     yield palette[3*hue + 0]
@@ -25,15 +41,14 @@ export default
 async function repaint(scope, {
   ms,
   palette,
+  graphics,
   width: w,
-  height: h,
-  graphics
+  height: h
 }) {
-  const read = address => graphics.read(address)
-  const g = pixels(palette, {registers, cgram}, [read])
+  const g = pixels(palette, {counters, registers, cgram}, graphics)
   const array = Uint8ClampedArray.from(g)
   const imageData = new ImageData(array, w, h)
   const bitmap = await scope.createImageBitmap(imageData)
 
-  scope.postMessage(Object.freeze({bitmap}), [bitmap])
+  scope.postMessage({bitmap}, [bitmap])
 }

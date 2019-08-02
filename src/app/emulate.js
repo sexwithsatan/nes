@@ -1,23 +1,33 @@
+/* global Array, Symbol */
 import animate from '@esnes/animated-canvas'
-import frames from './frames.js'
-import serialize from './serialize.js'
-import {PLAY, PAUSE} from './pause.js'
+
+export const [
+  PLAY,
+  PAUSE
+] = Array.from({length: 2}, () => Symbol())
 
 export default
-function* emulate(ww, graphics) {
+function* emulate(ww, options) {
   while (true) {
-    const iterable = frames(ww)
-    const {fps} = serialize([...graphics.elements])
+    const sequence = frames()
     
-    // The emulation loop is driven by a 2-state FSM:
-    //  (1) Emulation begins on the PAUSE -> PLAY transition
-    //  (2) Emulation is suspended on the PLAY -> PAUSE transition
-    //  (1) Emulation resumes on the next PAUSE -> PLAY transition
+    // The rendering loop is driven by a 2-state FSM:
+    //  (1) Rendering begins on the PAUSE -> PLAY transition
+    //  (2) Rendering is suspended on the PLAY -> PAUSE transition
+    //  (1) Rendering resumes on the next PAUSE -> PLAY transition
     // ...and so forth.
-    animate(iterable, {fps})
+    animate(sequence, options)
     yield PLAY
 
-    iterable.return()
+    sequence.return()
     yield PAUSE
+  }
+
+  function* frames() {
+    while (true) {
+
+      // Keep the worker synchronized with the rendering loop
+      ww.postMessage({task: 'repaint', ms: yield})
+    }
   }
 }
