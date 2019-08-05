@@ -20,21 +20,19 @@ import loadRomImage from './load-rom-image.js'
     })
   })
 
-  scope.addEventListener('nes:submit:program', function ({detail}) {
+  scope.addEventListener('nes:program:submit', function ({detail}) {
     loadRomImage(scope, detail)
   })
 
-  scope.addEventListener('nes:load:graphics', async function () {
+  scope.addEventListener('nes:graphics:submit', async function ({detail}) {
     const palette = await fetchJson(scope, '../palette.json')
 
-    scope.addEventListener('nes:submit:graphics', function ({detail}) {
-      loadRomImage(scope, {palette, ...detail})
-    })
+    loadRomImage(scope, {palette, ...detail})
   })
 
-  scope.dispatchEvent(new CustomEvent(`nes:load${fragment}`))
+  scope.dispatchEvent(new CustomEvent(`nes${fragment}:load`))
 
   scope.addEventListener('message', function ({data: {task, ...detail}}) {
-    scope.dispatchEvent(new CustomEvent(`nes:${task}${fragment}`, {detail}))
+    scope.dispatchEvent(new CustomEvent(`nes${fragment}:${task}`, {detail}))
   })
 }) (self)

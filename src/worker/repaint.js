@@ -26,8 +26,8 @@ function run(cpu, ppu) {
 
 }
 
-function* pixels(palette, {cgram, ...state}, [read]) {
-  for (const color of render(state, [read])) {
+function* pixels(palette, {cgram, ...state}, graphics) {
+  for (const color of render(state, graphics)) {
     const hue = cgram[color & 0x1f]
 
     yield palette[3*hue + 0]

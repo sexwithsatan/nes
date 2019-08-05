@@ -10,12 +10,12 @@ async function loadRomImage(scope, {rom, width, height, palette}) {
     graphics
   } = await allocate(rom)
 
-  scope.addEventListener('nes:repaint:program', function ({detail}) {
+  scope.addEventListener('nes:program:repaint', function ({detail}) {
     // TODO execute cpu
-    console.log('hello from #program')
+    //console.log('hello from #program')
   })
 
-  scope.addEventListener('nes:repaint:graphics', function ({detail}) {
+  scope.addEventListener('nes:graphics:repaint', function ({detail}) {
     repaint(scope, {graphics, palette, width, height, ...detail})
   })
 }

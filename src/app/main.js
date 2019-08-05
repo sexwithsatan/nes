@@ -30,7 +30,7 @@ import bindAttribute from './bind-attribute.js'
     ww.postMessage({task: 'submit', rom, ...dimensions})
 
     canvas.addEventListener('click', function () {
-      const {value} = fsm.next(undefined)
+      const {value} = fsm.next(null)
 
       // Update the [paused] attribute after each transition
       paused.set(value)
