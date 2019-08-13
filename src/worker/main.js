@@ -1,6 +1,6 @@
 /* global self, Worker, CustomEvent */
-import fetchJson from './fetch-json.js'
-import loadRomImage from './load-rom-image.js'
+import loadProgram from './load-program.js'
+import loadGraphics from './load-graphics.js'
 
 (function (scope) {
   const fragment = scope.location.hash.replace('#', ':')
@@ -15,19 +15,22 @@ import loadRomImage from './load-rom-image.js'
       graphics.postMessage(data)
     })
 
+    program.addEventListener('message', function () {
+      // TODO
+      // CPU has executed for 1 frame
+    })
+
     graphics.addEventListener('message', function ({data: {bitmap}}) {
       scope.postMessage({bitmap}, [bitmap])
     })
   })
 
   scope.addEventListener('nes:program:submit', function ({detail}) {
-    loadRomImage(scope, detail)
+    loadProgram(scope, detail)
   })
 
-  scope.addEventListener('nes:graphics:submit', async function ({detail}) {
-    const palette = await fetchJson(scope, '../palette.json')
-
-    loadRomImage(scope, {palette, ...detail})
+  scope.addEventListener('nes:graphics:submit', function ({detail}) {
+    loadGraphics(scope, detail)
   })
 
   scope.dispatchEvent(new CustomEvent(`nes${fragment}:load`))
