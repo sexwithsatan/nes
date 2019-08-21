@@ -6,7 +6,7 @@ import loadGraphics from './load-graphics.js'
   const fragment = scope.location.hash.replace('#', ':')
 
   scope.addEventListener('nes:load', function () {
-    const js = 'worker.js' // TODO: scope.location.match()
+    const js = scope.location.pathname /* TODO: verify origin */
     const program = new Worker(`${js}#program`, {type: 'module'})
     const graphics = new Worker(`${js}#graphics`, {type: 'module'})
 
