@@ -15,9 +15,8 @@ import loadGraphics from './load-graphics.js'
       graphics.postMessage(data)
     })
 
-    program.addEventListener('message', function () {
-      // TODO
-      // CPU has executed for 1 frame
+    program.addEventListener('message', function ({data}) {
+      graphics.postMessage(data)
     })
 
     graphics.addEventListener('message', function ({data: {bitmap}}) {

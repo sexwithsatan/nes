@@ -13,7 +13,7 @@ async function loadGraphics(scope, {rom, width, height}) {
     fetchJson(scope, '../palette.json')
   ])
 
-  scope.addEventListener('nes:graphics:repaint', function ({detail}) {
+  scope.addEventListener('nes:graphics:render', function ({detail}) {
     repaint(scope, {graphics, palette, width, height, ...detail})
   })
 }
