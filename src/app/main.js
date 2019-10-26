@@ -5,16 +5,18 @@ import serialize from './serialize.js'
 import bindAttribute from './bind-attribute.js'
 
 (function ({window, document}) {
-  const ww = new Worker('js/worker.js', {type: 'module'})
+  const ww = new Worker('js/ww.js', {type: 'module'})
 
   document.addEventListener('submit', function (e) {
     e.preventDefault()
-    main(e.target)
+    main(e)
   })
 
   function main({
-    rom: {files: [rom]},
-    graphics
+    target: {
+      rom: {files: [rom]},
+      graphics
+    }
   }) {
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('bitmaprenderer')

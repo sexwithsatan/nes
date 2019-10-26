@@ -5,11 +5,9 @@ async function loadProgram(scope, {rom}) {
   const {program} = await allocate(rom)
 
   scope.addEventListener('nes:program:repaint', function ({detail}) {
-    execute(detail)
-    scope.postMessage({task: 'render', ...detail})
+//    for (let L = 0; L < 262; L++) {
+      scope.postMessage({task: 'render'/*, cc: 341/3*L*/})
+      //execute(341/3)
+//    }
   })
-
-  function execute({ms}) {
-    // TODO: execute 6502 emulator for 1 frame
-  }
 }

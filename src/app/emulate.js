@@ -1,10 +1,8 @@
 /* global Array, Symbol */
 import animate from '@esnes/animated-canvas'
 
-export const [
-  PLAY,
-  PAUSE
-] = Array.from({length: 2}, () => Symbol())
+export const PLAY = Symbol()
+export const PAUSE = Symbol()
 
 export default
 function* emulate(ww, options) {

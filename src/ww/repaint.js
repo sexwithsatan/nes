@@ -13,19 +13,6 @@ const registers = {
 //  }
 }
 
-function run(cpu, ppu) {
-
-  while (true) {
-
-    ppu.next()
-    ppu.next()
-    ppu.next()
-
-    cpu.next()
-  }
-
-}
-
 function* pixels(palette, {cgram, ...state}, graphics) {
   for (const color of render(state, graphics)) {
     const hue = cgram[color & 0x1f]

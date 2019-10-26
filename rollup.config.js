@@ -9,7 +9,7 @@ export default {
   experimentalCodeSplitting: true,
   input: {
     app: './src/app/main.js',
-    worker: './src/worker/main.js'
+    ww: './src/ww/main.js'
   },
   output: {
     dir: './public/js',

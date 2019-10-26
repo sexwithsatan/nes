@@ -11,15 +11,21 @@ import loadGraphics from './load-graphics.js'
     const graphics = new Worker(`${js}#graphics`, {type: 'module'})
 
     scope.addEventListener('message', function ({data}) {
+
+      // Forward messages from the main thread to the workers
       program.postMessage(data)
       graphics.postMessage(data)
     })
 
     program.addEventListener('message', function ({data}) {
+
+      // Forward messages from #program to #graphics
       graphics.postMessage(data)
     })
 
     graphics.addEventListener('message', function ({data: {bitmap}}) {
+
+      // Forward messages from #graphics back to the main thread
       scope.postMessage({bitmap}, [bitmap])
     })
   })
