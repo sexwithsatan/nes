@@ -5,9 +5,11 @@ async function loadProgram(scope, {rom}) {
   const {program} = await allocate(rom)
 
   scope.addEventListener('nes:program:repaint', function ({detail}) {
-//    for (let L = 0; L < 262; L++) {
-      scope.postMessage({task: 'render'/*, cc: 341/3*L*/})
-      //execute(341/3)
-//    }
+    execute(detail)
+    scope.postMessage({task: 'render', ...detail})
   })
+
+  function execute({ms}) {
+    // TODO: run 6502
+  }
 }
