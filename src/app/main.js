@@ -9,14 +9,12 @@ import bindAttribute from './bind-attribute.js'
 
   document.addEventListener('submit', function (e) {
     e.preventDefault()
-    main(e)
+    main(e.target)
   })
 
   function main({
-    target: {
-      rom: {files: [rom]},
-      graphics
-    }
+    rom: {files: [rom]},
+    graphics
   }) {
     const canvas = document.getElementById('canvas')
     const context = canvas.getContext('bitmaprenderer')
